@@ -1,0 +1,166 @@
+﻿@model Storenarm2.Models.Domins.Tbl_User
+
+@{
+    ViewBag.Title = "صفحه ورود";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+
+<section id="register">
+    <div class="container">
+        <div class="inner">
+            <div class="services_part">
+                <h1 class="separator page_title">ورود به حساب کاربری</h1>
+                <div class="user_account_box">
+                    <div>
+                        <form novalidate="novalidate" id="frm_login2" method="post" action="/Register/Login">
+                            <div class="result sign nok" style="display: none;"></div><!--result-->
+                            <p class="item">
+                                <span class="i-user"></span>
+                                <input id="username" name="emailusername" class="ltr" placeholder="نام کاربری / ایمیل" type="text">
+                            </p>
+                            <p class="item">
+                                <span class="i-lock"></span>
+                                <input id="password" class="ltr" name="passwordlogin" placeholder="کلمه عبور" type="password">
+                            </p>
+
+                            <p class="item"><input value="ورود به سیستم" name="go_login" type="submit"></p>
+                            <p class="item">
+                                <a href="/Register/Register" class="button">ثبت نام</a>
+                            </p>
+                            <p><a href="/Register/ForgotPassword">رمز عبور خود را فراموش کرده ام</a></p>
+                        </form>
+                    </div>
+
+                    @if (ViewBag.Message != null)
+                    {
+                        <div class="alert alert-warning" style="margin-right:75px;">
+
+                            @ViewBag.Message
+
+                        </div>
+                    }
+
+                </div><!--end user_account_box-->
+            </div><!--close div.services_part-->
+        </div>
+    </div>
+
+
+
+    @{
+
+        <script src="~/Scripts/toastrsample.js"></script>
+        <script src="~/Scripts/toastr.min.js"></script>
+        <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+
+        if (ViewBag.State != null)
+        {
+
+
+            <div class="control-group" id="toastrTypeGroup">
+                <div class="controls">
+                    @{
+                        string ck = "";
+                        if (ViewBag.State == "Error")
+                        {
+                            ck = "checked"; <label class="radio">
+                                <input type="radio" style="visibility:hidden" checked="@ck" name="toasts" value="error" />
+                            </label>
+                        }
+                        else
+                        {
+                            ck = "checked"; <label class="radio">
+                                <input type="radio" name="toasts" style="visibility:hidden" value="success" checked="@ck" />
+                            </label>
+                        }
+                    }
+
+                    @*<label class="radio">
+                            <input type="radio" name="toasts" style="visibility:hidden" checked value="info" />
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="toasts" style="visibility:hidden" checked value="warning" />
+                        </label>*@
+
+                </div>
+            </div>
+            <br />
+            <div class="control-group" id="toastrPositionGroup">
+                <div class="controls">
+
+                    <label class="radio">
+                        <input type="radio" style="visibility:hidden" checked name="positions" value="toast-bottom-left" />
+                    </label>
+
+                </div>
+            </div>
+            <br />
+
+            if (ViewBag.State == "Error")
+            {
+                <button type="button" style="visibility:hidden" class="btn" id="showtoasterror"></button>
+                <script>
+                jQuery(function () {
+                    jQuery('#showtoasterror').click();
+                });
+                </script>
+            }
+            else
+            {
+                <button type="button" style="visibility:hidden" class="btn" id="showtoast"></button>
+                <script>
+                jQuery(function () {
+                    jQuery('#showtoast').click();
+                });
+                </script>
+            }
+        }
+
+    }
+
+</section>
+
+<style>
+    .alert-success {
+        color: #3C763D;
+        background-color: #DFF0D8;
+        border-color: #D6E9C6;
+    }
+
+    .alert-dismissable, .alert-dismissible {
+        padding-right: 35px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        width: 70%;
+        margin-right: 150px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .alert-info {
+        color: #31708F;
+        background-color: #D9EDF7;
+        border-color: #BCE8F1;
+    }
+
+    .alert-warning {
+        color: #8A6D3B;
+        background-color: #FCF8E3;
+        border-color: #FAEBCC;
+    }
+
+    .alert-danger {
+        color: #A94442;
+        background-color: #F2DEDE;
+        border-color: #EBCCD1;
+    }
+</style>
