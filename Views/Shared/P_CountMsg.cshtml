@@ -1,0 +1,14 @@
+﻿
+@using Storenarm2.Models.Repository
+@{
+    Rep_Profile repcount = new Rep_Profile();
+
+    string user = Session["User"].ToString();
+
+    var qid = repcount.GetUser().Where(a => a.User_Username == user).SingleOrDefault();
+
+
+    var qcount = repcount.GetMsg().Where(a => a.Message_UserGet == qid.User_ID && a.Message_Read == false).Count();
+
+    <span class='no'>@qcount</span>
+}

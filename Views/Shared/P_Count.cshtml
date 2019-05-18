@@ -1,0 +1,18 @@
+﻿@using Storenarm2.Models.Repository
+@{
+    Rep_Profile repcount = new Rep_Profile();
+
+    string user = Session["User"].ToString();
+
+    var qid = repcount.GetUser().Where(a => a.User_Username == user).SingleOrDefault();
+
+
+    var qcount = repcount.GetProduct().Where(a => a.Product_Userid == qid.User_ID).Count();
+
+}
+
+
+
+<span class="no">
+    @qcount
+</span>
