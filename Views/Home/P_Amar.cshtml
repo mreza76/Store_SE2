@@ -1,0 +1,50 @@
+﻿@using Storenarm2.Models.Repository
+@{
+    Rep_Home repproamar = new Rep_Home();
+
+    var quser = repproamar.Get_User().Count();
+    var qdonw = repproamar.Get_AmarPro().Where(a => a.Product_IsDownload == true).Count();
+    var qpost = repproamar.Get_AmarPro().Where(b => b.Product_IsDownload == false).Count();
+}
+
+
+<!--اطلاعات آماری-->
+<section class='home_part7'>
+    <div class='container'>
+        <div class='inner clearfix'>
+
+            <div class='site_info'>
+                <ul class='step1 list clearfix'>
+                    <li class='item sec_info'>
+                        <h1 class='title'>اطلاعات آماری <br> وب سایت</h1>
+                        <p class='text'>
+                            تعداد کاربران عضو شامل کسانی است که مورد تایید فروشگاه می باشند. تعداد محصولات قابل فروش دانلودی و پستی شامل محصولاتی است که مورد تایید فروشگاه می باشد.
+                        </p>
+                    </li>
+
+                    <li class='item sec_store'>
+                        <div class='pic' style='background-image:url(/Content/_images/globe.png);'></div>
+                        <br>
+                        <div class='subtitle'>تعداد فایل های دانلودی </div>
+
+                        <div class='title'>@qdonw</div>
+                    </li>
+
+                    <li class='item sec_file'>
+                        <div class='subtitle'>تعداد محصول پستی</div>
+                        <div class='title'>@qpost</div>
+                        <br>
+                        <div class='pic' style='background-image:url(/Content/_images/globe_files.png);'></div>
+                    </li>
+
+                    <li class='item sec_user'>
+                        <div class='pic' style='background-image:url(/Content/_images/globe_users.png);'></div>
+                        <br>
+                        <div class='subtitle'>تعداد کاربران</div>
+                        <div class='title'>@quser</div>
+                    </li>
+                </ul>
+            </div><!--site_info-->
+        </div><!--inner-->
+    </div><!--container-->
+</section><!--home_part7-->

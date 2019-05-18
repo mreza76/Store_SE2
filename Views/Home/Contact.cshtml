@@ -1,0 +1,155 @@
+﻿@model Storenarm2.Models.Domins.Tbl_Message
+
+@*@using CaptchaMvc
+@using CaptchaMvc.HtmlHelpers*@
+
+@{
+    ViewBag.Title = "ارتباط با ما";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+
+
+
+<section id="contact">
+    <div class="container">
+        <div class="inner">
+            <br>
+            <h1 class='separator page_title'>تماس با ما</h1>
+
+            @if (ViewBag.Error != null)
+            {
+                <div class="alert alert-info">
+                    <a class="close" style="cursor:pointer;" onclick="$('.alert').hide()">×</a>
+                    @ViewBag.Error
+                </div>
+            }
+
+
+            <form id="contact_form" class='contact_form' action="/Home/Contact" method='post'>
+                <div id="inner_contact_form">
+
+                    <div>
+                        <label>نام و نام خانوادگی</label>
+                        <br>
+                        <input type="text" id="user_name" required name="username" placeholder="نام و نام خانوادگی">
+                    </div>
+                    <div>
+                        <label>ایمیل</label>
+                        <br>
+                        <input type="text" id="email" required name="email" placeholder="ایمیل شما">
+                    </div>
+
+                    <div>
+                        <label>متن پیغام شما</label>
+                        <br>
+                        <textarea name='text' required placeholder='متن پیغام شما ...'></textarea>
+                    </div>
+                    <div id="captcha">
+
+                        @*@Html.Captcha("بازنگری", "", 3, "")*@
+
+                    </div>
+                </div><!-- end inner_contact_form -->
+
+                <div>
+                    <input type="submit" value="ارسال پیغام" style="width:300px;" name='go_contact'>
+                </div>
+            </form>
+
+        </div><!-- end inner -->
+    </div><!-- end container -->
+</section>
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+@{
+
+    <script src="~/Scripts/toastrsample.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+
+    if (ViewBag.State != null)
+    {
+
+
+        <div class="control-group" id="toastrTypeGroup">
+            <div class="controls">
+                @{
+                    string ck = "";
+                    if (ViewBag.State == "Error")
+                    {
+                        ck = "checked"; <label class="radio">
+                            <input type="radio" style="visibility:hidden" checked="@ck" name="toasts" value="error" />
+                        </label>
+                    }
+                    else
+                    {
+                        ck = "checked"; <label class="radio">
+                            <input type="radio" name="toasts" style="visibility:hidden" value="success" checked="@ck" />
+                        </label>
+                    }
+                }
+
+                @*<label class="radio">
+                        <input type="radio" name="toasts" style="visibility:hidden" checked value="info" />
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="toasts" style="visibility:hidden" checked value="warning" />
+                    </label>*@
+
+            </div>
+        </div>
+        <br />
+        <div class="control-group" id="toastrPositionGroup">
+            <div class="controls">
+
+                <label class="radio">
+                    <input type="radio" style="visibility:hidden" checked name="positions" value="toast-bottom-left" />
+                </label>
+
+            </div>
+        </div>
+        <br />
+
+        if (ViewBag.State == "Error")
+        {
+            <button type="button" style="visibility:hidden" class="btn" id="showtoasterror"></button>
+            <script>
+                jQuery(function () {
+                    jQuery('#showtoasterror').click();
+                });
+            </script>
+        }
+        else
+        {
+            <button type="button" style="visibility:hidden" class="btn" id="showtoast"></button>
+            <script>
+                jQuery(function () {
+                    jQuery('#showtoast').click();
+                });
+            </script>
+        }
+    }
+
+}
+
+<script>
+
+    $(function () {
+        $("[data-hide]").on("click", function () {
+            $("." + $(this).attr("data-hide")).hide();
+            // -or-, see below
+            // $(this).closest("." + $(this).attr("data-hide")).hide();
+        });
+    });
+</script>
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
