@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="25b7dea501654dba89e60c292518f650" Name="Diagram1">
+        <EntityTypeShape EntityType="Storenarm2Model.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_BankeName" Width="1.5" PointX="6" PointY="32.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Bill" Width="1.5" PointX="8.25" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_ConfirmEmail" Width="1.5" PointX="5.25" PointY="19.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Cooki" Width="1.5" PointX="5.25" PointY="22.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Download" Width="1.5" PointX="5.25" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Group" Width="1.5" PointX="9" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Identity" Width="1.5" PointX="5.25" PointY="28.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_InterimBill" Width="1.5" PointX="8.25" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Message" Width="1.5" PointX="5.25" PointY="35.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_NoBank" Width="1.5" PointX="8.25" PointY="24.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Pic" Width="1.5" PointX="13.5" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_PostStatus" Width="1.5" PointX="6" PointY="25.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Product" Width="1.5" PointX="11.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Role" Width="1.5" PointX="0.75" PointY="20.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Setting" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Slider" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_State" Width="1.5" PointX="0.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Tags" Width="1.5" PointX="13.5" PointY="21.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_TempDL" Width="1.5" PointX="10.5" PointY="25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_User" Width="1.5" PointX="3" PointY="17.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Visit" Width="1.5" PointX="4.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Weight" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Storenarm2Model.Tbl_Withdrawal" Width="1.5" PointX="5.25" PointY="48.25" IsExpanded="true" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_NoBank_Tbl_BankeName" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Bill_Tbl_PostStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Bill_Tbl_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Bill_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_TempDL_Tbl_Bill" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Table_1_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Cooki_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Download_Tbl_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Download_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Product_Tbl_Group" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Identity_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_InterimBill_Tbl_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_InterimBill_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Message_Tbl_User_UserGet" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Message_Tbl_User_UserSend" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_NoBank_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Pic_Tbl_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Product_Tbl_User" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Tags_Tbl_Product" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_User_Tbl_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_User_Tbl_State" ManuallyRouted="false" />
+        <AssociationConnector Association="Storenarm2Model.FK_Tbl_Withdrawal_Tbl_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
