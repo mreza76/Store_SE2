@@ -969,5 +969,476 @@ namespace Storenarm2.Controllers
             }
         }
 
+
+        //no-f2
+        [HttpGet]
+        public ActionResult BankAccount()
+        {
+
+            if (Session["User"] == null)
+                return RedirectToAction("Profile");
+
+            string username = Session["User"].ToString();
+            string rolename = Session["Role"].ToString();
+
+
+            if (rolename == "Seller" || rolename == "Admin")
+            {
+
+                var quser = db.Tbl_User.Where(a => a.User_Username == username && a.Tbl_Role.Role_Name == rolename).SingleOrDefault();
+
+                if (quser != null)
+                {
+                    var quser1 = db.Tbl_Identity.Where(a => a.Identity_Userid == quser.User_ID && a.Identity_Confirm == true).SingleOrDefault();
+
+                    if (quser1 != null)
+                    {
+
+                        var qbank = db.Tbl_NoBank.Where(a => a.Banks_Userid == quser.User_ID).FirstOrDefault();
+
+
+                        if (qbank == null)
+                        {
+                            return View();
+                        }
+                        else
+                        {
+                            ViewBag.Error = TempData["OK"];
+                            ViewBag.State = TempData["Result"];
+                            return View(qbank);
+                        }
+
+
+                    }
+
+                    else
+                    {
+                        TempData["State"] = "Error";
+                        return RedirectToAction("Profile");
+                    }
+
+                }
+                else
+                {
+                    TempData["State"] = "Error";
+                    return RedirectToAction("Profile");
+                }
+
+            }
+
+            else
+            {
+                TempData["State"] = "Error";
+                return RedirectToAction("Profile");
+            }
+        }
+
+        //no-f2
+        [HttpPost]
+        public ActionResult AddBankAccount(string AccountCode, string CartCode, string ShebaCode, string bank_id, string NameUser)
+        {
+            try
+            {
+                if (Session["User"] == null)
+                    return RedirectToAction("Profile");
+
+                string username = Session["User"].ToString();
+                string rolename = Session["Role"].ToString();
+
+
+                if (rolename == "Seller" || rolename == "Admin")
+                {
+                    var quser = db.Tbl_User.Where(a => a.User_Username == username && (a.Tbl_Role.Role_Name == rolename)).SingleOrDefault();
+
+                    if (quser != null)
+                    {
+                        var quser1 = db.Tbl_Identity.Where(a => a.Identity_Userid == quser.User_ID && a.Identity_Confirm == true).SingleOrDefault();
+
+                        if (quser1 != null)
+                        {
+
+
+                            Tbl_NoBank t = new Tbl_NoBank();
+                            t.Banks_NameID = Convert.ToInt32(bank_id);
+                            t.Banks_Nameuser = NameUser;
+                            t.Banks_NoBank = AccountCode;
+                            t.Banks_NoCart = CartCode;
+                            t.Banks_NoIR = ShebaCode;
+                            t.Banks_Userid = quser.User_ID;
+
+                            db.Tbl_NoBank.Add(t);
+                            db.SaveChanges();
+
+                            TempData["OK"] = "شماره حساب ثبت شد";
+                            TempData["Result"] = "ok";
+                            return RedirectToAction("BankAccount");
+
+                        }
+
+                        else
+                        {
+                            TempData["State"] = "Error";
+                            return RedirectToAction("Profile");
+                        }
+
+                    }
+                    else
+                    {
+                        TempData["State"] = "Error";
+                        return RedirectToAction("Profile");
+                    }
+
+                }
+
+                else
+                {
+                    TempData["State"] = "Error";
+                    return RedirectToAction("Profile");
+                }
+            }
+            catch
+            {
+                TempData["State"] = "Error";
+                return RedirectToAction("Profile");
+
+            }
+        }
+
+        //22-f2
+        public ActionResult ListLink()
+        {
+
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "Register");
+
+            string username = Session["User"].ToString();
+            string rolename = Session["Role"].ToString();
+
+
+            if (rolename == "Seller" || rolename == "Admin")
+            {
+                var quser = db.Tbl_User.Where(a => a.User_Username == username && (a.Tbl_Role.Role_Name == rolename)).SingleOrDefault();
+
+                if (quser != null)
+                {
+                    var quser1 = db.Tbl_Identity.Where(a => a.Identity_Userid == quser.User_ID && a.Identity_Confirm == true).SingleOrDefault();
+
+                    if (quser1 != null)
+                    {
+
+                        var qlist = (from a in db.Tbl_Product
+                                     where a.Product_IsDownload == true && a.Product_Userid == quser.User_ID
+                                     orderby a.Product_Date descending
+                                     select a).ToList();
+
+                        if (qlist == null)
+                        {
+                            ViewBag.Error = "شما تاکنون محصولی  دانلودی را برای فروش ثبت نکرده اید!!";
+                            return View();
+                        }
+                        else
+                        {
+                            //نمایش محصولات دانلودی
+                            ViewBag.Error = TempData["OK"];
+                            ViewBag.State = TempData["Result"];
+                            return View(qlist);
+                        }
+
+
+                    }
+                    else
+                    {
+                        TempData["State"] = "Error";
+                        return RedirectToAction("Profile");
+                    }
+
+                }
+                else
+                {
+                    TempData["State"] = "Error";
+                    return RedirectToAction("Profile");
+                }
+
+            }
+            else
+            {
+                TempData["State"] = "Error";
+                return RedirectToAction("Profile");
+            }
+
+        }
+
+        //22-f2
+        [HttpGet]
+        public ActionResult AddLink(int id = 0)
+        {
+
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "Register");
+
+            string username = Session["User"].ToString();
+            string rolename = Session["Role"].ToString();
+
+
+            if (rolename == "Seller" || rolename == "Admin")
+            {
+                var quser = db.Tbl_User.Where(a => a.User_Username == username && (a.Tbl_Role.Role_Name == rolename)).SingleOrDefault();
+
+                if (quser != null)
+                {
+                    var quser1 = db.Tbl_Identity.Where(a => a.Identity_Userid == quser.User_ID && a.Identity_Confirm == true).SingleOrDefault();
+
+                    if (quser1 != null)
+                    {
+
+                        var qid = db.Tbl_Product.Where(a => a.Product_ID == id).SingleOrDefault();
+
+                        if (qid == null)
+                        {
+                            return RedirectToAction("ListLink");
+
+                        }
+                        else
+                        {
+                            return View(qid);
+                        }
+
+
+                    }
+                    else
+                    {
+                        TempData["State"] = "Error";
+                        return RedirectToAction("Profile");
+                    }
+
+                }
+                else
+                {
+                    TempData["State"] = "Error";
+                    return RedirectToAction("Profile");
+                }
+
+            }
+            else
+            {
+                TempData["State"] = "Error";
+                return RedirectToAction("Profile");
+            }
+
+        }
+
+
+        //22-f2
+        [HttpPost]
+        public JsonResult UploadFiles()
+        {
+
+
+            if (Session["User"] == null)
+                return Json(false);
+
+            string username = Session["User"].ToString();
+            string rolename = Session["Role"].ToString();
+
+
+            if (rolename == "Seller" || rolename == "Admin")
+            {
+                var quser = db.Tbl_User.Where(a => a.User_Username == username && (a.Tbl_Role.Role_Name == rolename) ).SingleOrDefault();
+
+                if (quser != null)
+                {
+                    var quser1 = db.Tbl_Identity.Where(a => a.Identity_Userid == quser.User_ID && a.Identity_Confirm == true).SingleOrDefault();
+
+                    if (quser1 != null)
+                    {
+
+
+                        var r = new List<UploadFilesResult>();
+
+                        foreach (string file in Request.Files)
+                        {
+                            HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
+                            if (hpf.ContentLength == 0)
+                                continue;
+                            Random rnd = new Random();
+                            string name = rnd.Next(1, 1000).ToString() + hpf.FileName;
+                            string savedFileName = Path.Combine(Server.MapPath("~/Content/Uploder"), Path.GetFileName(name));
+                            hpf.SaveAs(savedFileName);
+
+                            r.Add(new UploadFilesResult()
+                            {
+                                Name = hpf.FileName,
+                                Length = hpf.ContentLength / 1024,
+                                Type = hpf.ContentType
+                            });
+
+
+                            Tbl_Download d = new Tbl_Download();
+                            d.Download_Allow = false;
+                            d.Download_Date = DateTime.Now;
+                            d.Download_Length = hpf.ContentLength / 1024;
+                            d.Download_Url = name;
+                            d.Download_Userid = quser.User_ID;
+
+                            db.Tbl_Download.Add(d);
+                            db.SaveChanges();
+                        }
+
+                        return Json(true, JsonRequestBehavior.AllowGet);
+                        //    return Content("{\"name\":\"" + r[0].Name + "\",\"type\":\"" + r[0].Type + "\",\"size\":\"" + string.Format("{0} bytes", r[0].Length) + "\"}", "application/json");
+
+                    }
+                    else
+                    {
+                        TempData["State"] = "Error";
+                        return Json(false);
+                    }
+
+                }
+                else
+                {
+                    TempData["State"] = "Error";
+                    return Json(false);
+                }
+
+            }
+            else
+            {
+                TempData["State"] = "Error";
+                return Json(false);
+            }
+
+        }
+
+
+        //22-f2
+        [HttpPost]
+        public ActionResult upload(int proid)
+        {
+            if (Session["User"] == null)
+                return RedirectToAction("Login", "Register");
+
+            string username = Session["User"].ToString();
+
+            var quser = db.Tbl_User.Where(a => a.User_Username == username).SingleOrDefault();
+
+            if (quser != null)
+            {
+
+                var qid = db.Tbl_Product.Where(a => a.Product_ID == proid).SingleOrDefault();
+
+                if (qid == null)
+                {
+                    return RedirectToAction("ListLink");
+                }
+                else
+                {
+                    var qiddownlaod = db.Tbl_Download.OrderByDescending(a => a.Download_ID).FirstOrDefault();
+
+                    qiddownlaod.Download_Productid = proid;
+                    db.Tbl_Download.Attach(qiddownlaod);
+                    db.Entry(qiddownlaod).State = System.Data.Entity.EntityState.Modified;
+                    db.SaveChanges();
+                    return RedirectToAction("ListLink");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Register");
+            }
+
+        }
+
+        //no-f2
+        public ActionResult LsitMesage()
+        {
+            if (Session["User"] == null)
+                return RedirectToAction("Profile");
+
+            string username = Session["User"].ToString();
+
+            var quser = db.Tbl_User.Where(a => a.User_Username == username).SingleOrDefault();
+
+            if (quser != null)
+            {
+                var quser1 = db.Tbl_Identity.Where(a => a.Identity_Userid == quser.User_ID && a.Identity_Confirm == true).SingleOrDefault();
+
+                if (quser1 != null)
+                {
+                    var qmsg = db.Tbl_Message.Where(a => a.Message_UserGet == quser.User_ID).OrderByDescending(a => a.Message_Date).ToList();
+
+                    if (qmsg == null)
+                    {
+                        ViewBag.Error = TempData["OK"];
+                        ViewBag.State = TempData["Result"];
+                        return View();
+                    }
+                    else
+                    {
+                        ViewBag.Error = TempData["OK"];
+                        ViewBag.State = TempData["Result"];
+                        return View(qmsg.OrderByDescending(a => a.Message_Read == false));
+                    }
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Register");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Register");
+            }
+
+        }
+        [HttpPost]
+        public ActionResult SendMsg(string BMesg, string TMesg, string UserGet)
+        {
+            if (Session["User"] == null)
+                return RedirectToAction("Profile");
+
+
+            string username = Session["User"].ToString();
+
+            var quser = db.Tbl_User.Where(a => a.User_Username == username).SingleOrDefault();
+
+            if (quser != null)
+            {
+                var quser1 = db.Tbl_Identity.Where(a => a.Identity_Userid == quser.User_ID && a.Identity_Confirm == true).SingleOrDefault();
+
+                if (quser1 != null)
+                {
+                    var quserget = db.Tbl_User.Where(a => a.User_Username == UserGet).FirstOrDefault();
+                    if (quserget == null)
+                    {
+                        TempData["MsgError"] = "کاربر مورد نظر یافت نشد!";
+                        return RedirectToAction("ShowMsg");
+                    }
+
+                    Tbl_Message m = new Tbl_Message();
+                    m.Message_Body = BMesg;
+                    m.Message_Date = DateTime.Now;
+                    m.Message_Read = false;
+                    m.Message_Title = TMesg;
+                    m.Message_UserGet = quserget.User_ID;
+                    m.Message_UserSend = quser.User_ID;
+                    db.Tbl_Message.Add(m);
+                    db.SaveChanges();
+                    TempData["OK"] = "پیام ارسال شد";
+                    TempData["Result"] = "ok";
+                    return RedirectToAction("LsitMesage");
+                }
+                else
+                {
+                    return RedirectToAction("Login", "Register");
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login", "Register");
+            }
+        }
+
+
     }
 }
