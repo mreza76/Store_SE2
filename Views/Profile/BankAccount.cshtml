@@ -1,0 +1,251 @@
+﻿@model Storenarm2.Models.Domins.Tbl_NoBank
+@using Storenarm2.Models.Repository
+@{
+    ViewBag.Title = "مدیریت حساب بانکی";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+
+<style>
+    .alert-success {
+        color: #3C763D;
+        background-color: #DFF0D8;
+        border-color: #D6E9C6;
+    }
+
+    .alert-dismissable, .alert-dismissible {
+        padding-right: 35px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        width: 70%;
+        margin-right: 150px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .alert-info {
+        color: #31708F;
+        background-color: #D9EDF7;
+        border-color: #BCE8F1;
+    }
+
+    .alert-warning {
+        color: #8A6D3B;
+        background-color: #FCF8E3;
+        border-color: #FAEBCC;
+    }
+
+    .alert-danger {
+        color: #A94442;
+        background-color: #F2DEDE;
+        border-color: #EBCCD1;
+    }
+</style>
+<style>
+    .fa-star {
+        color: #EA3F4B;
+        font-size: 0.6rem;
+        font-style: normal;
+        font-weight: bold;
+        position: relative;
+        top: -5px;
+    }
+</style>
+<div class="part_left">
+    <div id="bank_account_management" class="userpanel_bright_section">
+        <h1 class="separator">مدیریت حساب بانکی </h1>
+        <div id="user_account_page" class="userpanel_bright_section">
+            <div class="form_style1 form_wrapper clearfix">
+
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert alert-success">
+                        @ViewBag.Error
+                    </div>
+                }
+
+                @if (Model == null)
+                {
+
+                    using (Html.BeginForm("AddBankAccount", "Profile", FormMethod.Post, new { @id = "frm_bank_account" }))
+                    {
+                        <ul class="list">
+                            <li class="item">
+                                <label>نام بانک : <i class="fa fa-star"></i></label>
+                                <select class="full" required name="bank_id">
+
+                                    @{
+                                        Rep_Profile repbank = new Rep_Profile();
+
+                                        foreach (var item in repbank.GetBankName())
+                                        {
+                                            <option value="@item.Bank_ID">@item.Bank_Name</option>
+                                        }
+
+                                    }
+
+                                </select>
+                            </li>
+                            <li class="item">
+                                <label>نام صاحب حساب : <i class="fa fa-star"></i></label>
+                                <input name="NameUser" required value="" type="text">
+
+                            </li>
+                            <li class="item">
+                                <label>شماره حساب : <i class="fa fa-star"></i></label>
+                                <input name="AccountCode" required value="" type="text">
+                            </li>
+
+                            <li class="item">
+                                <label>شماره کارت : <i class="fa fa-star"></i></label>
+                                <input name="CartCode" required value="" type="text">
+                            </li>
+
+                            <li class="item full">
+                                <label>شماره شبا : <i class="fa fa-star"></i></label>
+                                <input name="ShebaCode" required value="" type="text">
+                            </li>
+
+
+                            <li class="submit_btn item full">
+                                <input value="ثبت مشخصات حساب بانکی" name="go_bank_account" class="threed_button" type="submit">
+                            </li>
+                        </ul>
+                    }
+
+                    <div class="margin_top60 fl table_style1">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نام بانک</th>
+                                    <th>متعلق به</th>
+                                    <th>شماره حساب</th>
+                                    <th>شماره کارت</th>
+                                    <th>شناسه شبا</th>
+                                    <th>عمليات</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td colspan="7"><div class="noitem">حسابی برای نمایش موجود نیست.</div></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+                else
+                {
+                    <div class="margin_top60 fl table_style1">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>نام بانک</th>
+                                    <th>متعلق به</th>
+                                    <th>شماره حساب</th>
+                                    <th>شماره کارت</th>
+                                    <th>شناسه شبا</th>
+                                    <th>عمليات</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@Model.Tbl_BankeName.Bank_Name</td>
+                                    <td>@Model.Banks_Nameuser</td>
+                                    <td>@Model.Banks_NoBank</td>
+                                    <td>@Model.Banks_NoCart</td>
+                                    <td>@Model.Banks_NoIR </td>
+                                    <td>@Html.ActionLink(" ", "EditBank", new { id = @Model.Banks_ID }, new { @class = "fa fa-edit", style = "color:green; font-size:19px;" })</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                }
+
+
+
+            </div><!--form_style1-->
+        </div><!--user_account_page-->
+
+
+    </div><!-- end bank_account_management -->
+</div>
+@{
+
+    <script src="~/Scripts/toastrsample.js"></script>
+    <script src="~/Scripts/toastr.min.js"></script>
+    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+
+    if (ViewBag.State != null)
+    {
+
+
+        <div class="control-group" id="toastrTypeGroup">
+            <div class="controls">
+                @{
+                    string ck = "";
+                    if (ViewBag.State == "Error")
+                    {
+                        ck = "checked"; <label class="radio">
+                            <input type="radio" style="visibility:hidden" checked="@ck" name="toasts" value="error" />
+                        </label>
+                    }
+                    else
+                    {
+                        ck = "checked"; <label class="radio">
+                            <input type="radio" name="toasts" style="visibility:hidden" value="success" checked="@ck" />
+                        </label>
+                    }
+                }
+
+                @*<label class="radio">
+                        <input type="radio" name="toasts" style="visibility:hidden" checked value="info" />
+                    </label>
+                    <label class="radio">
+                        <input type="radio" name="toasts" style="visibility:hidden" checked value="warning" />
+                    </label>*@
+
+            </div>
+        </div>
+        <br />
+        <div class="control-group" id="toastrPositionGroup">
+            <div class="controls">
+
+                <label class="radio">
+                    <input type="radio" style="visibility:hidden" checked name="positions" value="toast-bottom-left" />
+                </label>
+
+            </div>
+        </div>
+        <br />
+
+        if (ViewBag.State == "Error")
+        {
+            <button type="button" style="visibility:hidden" class="btn" id="showtoasterror"></button>
+            <script>
+                    jQuery(function () {
+                        jQuery('#showtoasterror').click();
+                    });
+            </script>
+        }
+        else
+        {
+            <button type="button" style="visibility:hidden" class="btn" id="showtoast"></button>
+            <script>
+                    jQuery(function () {
+                        jQuery('#showtoast').click();
+                    });
+            </script>
+        }
+    }
+
+}
+

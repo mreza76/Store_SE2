@@ -1,0 +1,212 @@
+﻿@model IEnumerable<Storenarm2.Models.Domins.Tbl_Message>
+@using Storenarm2.Models.Plugins
+@{
+    ViewBag.Title = "لیست پیام ها";
+    Layout = "~/Views/Shared/_Profile.cshtml";
+}
+
+<link href="~/Content/_css/alert.css" rel="stylesheet" />
+<div class="part_left">
+
+    <div id="product_list" class="userpanel_bright_section">
+        <h1 class="separator">لیست پیام های خصوصی شما</h1>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">
+                @ViewBag.Error
+            </div>
+        }
+
+
+
+
+        @if (Model.Count() > 0)
+        {
+            <div class="table_style1">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>
+                                عنوان پیام
+                            </th>
+
+                            <th>
+                                زمان ارسال
+                            </th>
+
+                            <th>
+                                فرستنده
+                            </th>
+
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            string font = "";
+                            if (item.Message_Read == false)
+                            {
+                                font = "font-weight:700";
+                            }
+                            <tr style="@font">
+                                <td colspan="1">
+                                    <a href="/Profile/ShowMsg?id=@item.Message_ID">
+                                        @Html.DisplayFor(modelItem => item.Message_Title)
+                                    </a>
+                                </td>
+
+                                <td>
+                                    @PersianDateExtensionMethods.ToPeString(item.Message_Date, "dddd, dd MMMM,yyyy")
+                                </td>
+
+                                <td>
+                                    @if (item.Message_UserSend == null)
+                                    {
+                                        <span style="color:red;">پیام سیستمی</span>
+                                    }
+                                    else
+                                    {
+                                        @Html.DisplayFor(modelItem => item.Tbl_User1.User_NameFamily)
+                                    }
+
+                                </td>
+
+                                <td>
+                                    @Html.ActionLink(" ", "DeleteMsg", new { id = item.Message_ID }, new { @class = "fa fa-trash-o", style = "color:red; font-size:19px;", onclick = "return confirm('آیا از حذف این پیام مطمئا هستید؟');" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink(" ", "ShowMsg", new { id = item.Message_ID }, new { @class = "fa fa-eye", style = "color:green; font-size:19px;" })
+                                </td>
+                            </tr>
+
+
+                        }
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+        }
+        else
+        {
+            <div class="table_style1">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                عنوان پیام
+                            </th>
+
+                            <th>
+                                زمان ارسال
+                            </th>
+
+                            <th>
+                                فرستنده
+                            </th>
+
+
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <tr><td colspan="9"><div class="noitem">پیام  برای نمایش موجود نیست.</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        }
+
+
+
+    </div>
+
+
+    @{
+
+        <script src="~/Scripts/toastrsample.js"></script>
+        <script src="~/Scripts/toastr.min.js"></script>
+        <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+
+        if (ViewBag.State != null)
+        {
+
+
+            <div class="control-group" id="toastrTypeGroup">
+                <div class="controls">
+                    @{
+                        string ck = "";
+                        if (ViewBag.State == "Error")
+                        {
+                            ck = "checked"; <label class="radio">
+                                <input type="radio" style="visibility:hidden" checked="@ck" name="toasts" value="error" />
+                            </label>
+                        }
+                        else
+                        {
+                            ck = "checked"; <label class="radio">
+                                <input type="radio" name="toasts" style="visibility:hidden" value="success" checked="@ck" />
+                            </label>
+                        }
+                    }
+
+                    @*<label class="radio">
+                            <input type="radio" name="toasts" style="visibility:hidden" checked value="info" />
+                        </label>
+                        <label class="radio">
+                            <input type="radio" name="toasts" style="visibility:hidden" checked value="warning" />
+                        </label>*@
+
+                </div>
+            </div>
+            <br />
+            <div class="control-group" id="toastrPositionGroup">
+                <div class="controls">
+
+                    <label class="radio">
+                        <input type="radio" style="visibility:hidden" checked name="positions" value="toast-bottom-left" />
+                    </label>
+
+                </div>
+            </div>
+            <br />
+
+            if (ViewBag.State == "Error")
+            {
+                <button type="button" style="visibility:hidden" class="btn" id="showtoasterror"></button>
+                <script>
+                    jQuery(function () {
+                        jQuery('#showtoasterror').click();
+                    });
+                </script>
+            }
+            else
+            {
+                <button type="button" style="visibility:hidden" class="btn" id="showtoast"></button>
+                <script>
+                    jQuery(function () {
+                        jQuery('#showtoast').click();
+                    });
+                </script>
+            }
+        }
+
+    }
+
+
+
+
+
+</div>

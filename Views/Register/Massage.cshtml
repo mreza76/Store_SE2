@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "پیام";
+    Layout = "~/Views/Shared/_MainHome.cshtml";
+}
+
+<section id="register">
+    <div class="container">
+        <div class="inner">
+            <div class='services_part' style="height:500px;">
+                <h1 class='separator page_title'>پیام سیستمی </h1>
+
+
+                <div class="alert alert-info">
+
+                    @ViewBag.Message
+
+                </div>
+
+                @{
+
+                    <script src="~/Scripts/toastrsample.js"></script>
+                    <script src="~/Scripts/toastr.min.js"></script>
+                    <link href="~/Content/toastr.min.css" rel="stylesheet" />
+
+
+
+                    <div class="control-group" id="toastrTypeGroup">
+                        <div class="controls">
+                            @{
+                                string ck = "";
+                                if (ViewBag.State == "Error")
+                                {
+                                    ck = "checked"; <label class="radio">
+                                        <input type="radio" style="visibility:hidden" checked="@ck" name="toasts" value="error" />
+                                    </label>
+                                }
+                                else
+                                {
+                                    ck = "checked"; <label class="radio">
+                                        <input type="radio" name="toasts" style="visibility:hidden" value="success" checked="@ck" />
+                                    </label>
+                                }
+                            }
+
+                            @*<label class="radio">
+                                    <input type="radio" name="toasts" style="visibility:hidden" checked value="info" />
+                                </label>
+                                <label class="radio">
+                                    <input type="radio" name="toasts" style="visibility:hidden" checked value="warning" />
+                                </label>*@
+
+                        </div>
+                    </div>
+                    <br />
+                    <div class="control-group" id="toastrPositionGroup">
+                        <div class="controls">
+
+                            <label class="radio">
+                                <input type="radio" style="visibility:hidden" checked name="positions" value="toast-bottom-left" />
+                            </label>
+
+                        </div>
+                    </div>
+                    <br />
+
+                    if (ViewBag.State == "Error")
+                    {
+                        <button type="button" style="visibility:hidden" class="btn" id="showtoasterror"></button>
+                        <script>
+                            jQuery(function () {
+                                jQuery('#showtoasterror').click();
+                            });
+                        </script>
+                    }
+                    else
+                    {
+                        <button type="button" style="visibility:hidden" class="btn" id="showtoast"></button>
+                        <script>
+                            jQuery(function () {
+                                jQuery('#showtoast').click();
+                            });
+                        </script>
+                    }
+
+
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .alert-success {
+        color: #3C763D;
+        background-color: #DFF0D8;
+        border-color: #D6E9C6;
+    }
+
+    .alert-dismissable, .alert-dismissible {
+        padding-right: 35px;
+    }
+
+    .alert {
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        text-align: center;
+        width: 70%;
+        margin-right: 150px;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .alert-info {
+        color: #31708F;
+        background-color: #D9EDF7;
+        border-color: #BCE8F1;
+    }
+
+    .alert-warning {
+        color: #8A6D3B;
+        background-color: #FCF8E3;
+        border-color: #FAEBCC;
+    }
+
+    .alert-danger {
+        color: #A94442;
+        background-color: #F2DEDE;
+        border-color: #EBCCD1;
+    }
+</style>

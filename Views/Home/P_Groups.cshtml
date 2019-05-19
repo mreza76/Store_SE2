@@ -1,0 +1,139 @@
+﻿@*@using Storenarm2.Models.Repository
+
+    @{
+        Rep_Home repg = new Rep_Home();
+
+
+
+        <section class='home_part3'>
+            <div class='container'>
+                <div class='inner clearfix'>
+                    <div class='cat_style1'>
+                        <ul class='step1'>
+
+
+
+                            @foreach (var item in repg.GetGroup())
+                            {
+                                <li class='item'>
+                                    <div class='pic' style='background-image:url(/Content/_images/Group/@item.Group_Pic);'></div>
+                                    <h1 class='title'>@item.Group_Name</h1>
+                                    <div class='content'>
+                                        <div class='row'>
+                                            <span class='name'>تعداد فایل های دانلودی</span>
+                                            @{
+                                                var qcount = repg.Get_Product().Where(a => a.Product_Groupid == item.Group_ID && a.Product_IsDownload == true).ToList();
+
+                                                if (qcount.Count() > 0)
+                                                {
+                                                    <span class='val'>@qcount.Count()</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class='val'>0</span>
+                                                }
+
+
+
+                                            }
+
+                                        </div>
+
+
+                                        <div class='row'>
+                                            <span class='name'> تعداد محصولات پستی</span>
+                                            @{
+                                                var qcount1 = repg.Get_Product().Where(a => a.Product_Groupid == item.Group_ID && a.Product_IsDownload == false).ToList();
+
+                                                if (qcount1.Count() > 0)
+                                                {
+                                                    <span class='val'>@qcount1.Count()</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class='val'>0</span>
+                                                }
+
+
+
+                                            }
+
+                                        </div>
+
+
+                                        <a href='/Home/ShowGroup?id=@item.Group_ID' title='@item.Group_Name' class='link'><i class='i-angle-right'></i> مشاهده گروه <i class='i-angle-left'></i></a>
+                                    </div>
+                                </li>
+                            }
+
+
+
+
+                        </ul>
+                    </div><!--cat_style1-->
+                </div><!--inner-->
+            </div><!--container-->
+        </section>
+
+    }*@
+<!--دسته ها-->
+<section class='home_part3'>
+    <div class='container'>
+        <div class='inner clearfix'>
+            <div class='cat_style1'>
+                <ul class='step1'>
+
+                    <li class='item'>
+                        <div class='pic' style='background-image:url(Content/_images/default/sound.png);'></div>
+                        <h1 class='title'>فایل های صوتی</h1>
+                        <div class='content'>
+                            <div class='row'>
+                                <span class='name'>تعداد فایلها</span>
+                                <span class='val'>1</span>
+                            </div>
+                            <div class='row'>
+                                <span class='name'> تعداد فایل ها</span>
+                                <span class='val'>1</span>
+                            </div>
+                            <a href='#' title='' class='link'><i class='i-angle-right'></i> مشاهده گروه <i class='i-angle-left'></i></a>
+                        </div>
+                    </li>
+
+                    <li class='item'>
+                        <div class='pic' style='background-image:url(Content/_images/default/img.png);'></div>
+                        <h1 class='title'>فایل های تصویری</h1>
+                        <div class='content'>
+                            <div class='row'>
+                                <span class='name'>تعداد فایل ها</span>
+                                <span class='val'>9</span>
+                            </div>
+                            <div class='row'>
+                                <span class='name'> تعداد فایل ها</span>
+                                <span class='val'>13</span>
+                            </div>
+                            <a href='#' title=' تصویری' class='link'><i class='i-angle-right'></i> مشاهده گروه <i class='i-angle-left'></i></a>
+                        </div>
+                    </li>
+
+                    <li class='item'>
+                        <div class='pic' style='background-image:url(Content/_images/default/text.png);'></div>
+                        <h1 class='title'>فایل های متنی</h1>
+                        <div class='content'>
+                            <div class='row'>
+                                <span class='name'>تعداد فایل ها</span>
+                                <span class='val'>7</span>
+                            </div>
+                            <div class='row'>
+                                <span class='name'> تعداد فایل ها</span>
+                                <span class='val'>10</span>
+                            </div>
+                            <a href='#' title=' متنی' class='link'><i class='i-angle-right'></i> مشاهده گروه <i class='i-angle-left'></i></a>
+                        </div>
+                    </li>
+
+
+                </ul>
+            </div><!--cat_style1-->
+        </div><!--inner-->
+    </div><!--container-->
+</section><!--home_part3-->
